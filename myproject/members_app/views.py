@@ -50,10 +50,13 @@ class EditUserPage(View):
         try:
             user.full_clean()
             form = EditMemberForm(request.POST, instance=user)
-            course_id = request.POST.get('courses')
-            course = Course.objects.filter(id=course_id).first()
-            course.enrolled_users.add(user)
-            form.save()
+            if form.is_valid():
+                courses = Course.objects.filter(pk__in=form.cleaned_data['courses'])
+                for course in courses:
+                    print(course)
+                    course.enrolled_users.add(user)
+
+                form.save()
 
         except ValidationError as e:
             print(e)
