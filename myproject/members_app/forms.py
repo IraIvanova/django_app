@@ -2,14 +2,16 @@ from django import forms
 from courses_app.models import Course
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from custom_user.models import CustomUser
 
 
 class CreateMemberForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'date_of_birth', 'password1', 'password2']
+
     field_order = ['username', 'email', 'password1', 'password2']
-    email = forms.EmailField(label="Your Email")
-
-
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
@@ -22,8 +24,8 @@ class CreateMemberForm(UserCreationForm):
 
 class EditMemberForm(ModelForm):
     class Meta:
-        model = User
-        fields = ["username", "email"]
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'date_of_birth']
 
     courses = forms.ModelChoiceField(
                         queryset=Course.objects.all().order_by('name'),

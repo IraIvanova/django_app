@@ -6,14 +6,26 @@
 <h2>User info</h2>
 {% if not edit %}
 <table class="table">
-<tr>
-    <td>Username:</td>
-    <td>{{user.username}}</td>
-</tr>
     <tr>
-    <td>Email:</td>
-    <td>{{user.email}}</td>
-</tr>
+        <td>Username:</td>
+        <td>{{user.username}}</td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>{{user.email}}</td>
+    </tr>
+    <tr>
+        <td>Phone:</td>
+        <td>{{user.phone}}</td>
+    </tr>
+    <tr>
+        <td>Full name:</td>
+        <td>{{user.get_full_name}}</td>
+    </tr>
+    <tr>
+        <td>Date of birth:</td>
+        <td>{{user.date_of_birth}}</td>
+    </tr>
 </table>
 {% else %}
 <form method="post" action="{% url 'edit_user' user.id %}">
