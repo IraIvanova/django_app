@@ -5,15 +5,10 @@
 {% block content %}
 
 <h1>Input your data</h1>
-    <form method="post" action="{% url 'member_input' %}">
+    <form method="post" action="{% url 'create_member' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-dark">Save</button>
 </form>
 
-{% if member_input %}
-    <h1>Saved data:</h1>
-    <p>Username: {{ member_input.username }}</p>
-    <p>Email: {{ member_input.email }}</p>
-{% endif%}
 {% endblock %}

@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'members_app',
     'courses_app',
     'bootstrap5',
+    'logistration'
 ]
 
 MIDDLEWARE = [
@@ -58,8 +64,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            './members_app/templates/',
-            './courses_app/templates/',
+            os.path.join(BASE_DIR, 'myproject', 'templates'),
+            os.path.join(BASE_DIR, 'members_app', 'templates'),
+            os.path.join(BASE_DIR, 'courses_app', 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -81,8 +88,12 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_PORT"),
     }
 }
 

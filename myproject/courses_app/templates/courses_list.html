@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Courses page{% endblock %}
+
+{% block content %}
+<h2>Available courses</h2>
+
+{% for course in courses %}
+    <div class="p-2">
+        <a href="{% url 'show_course' course.id %}">{{ course.name }}</a>
+    </div>
+{% endfor %}
+<a href="{% url 'save_course' %}">Create new course</a>
+
+{% endblock %}

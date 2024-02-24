@@ -1,8 +1,8 @@
-from .forms import MemberForm
+from .forms import CreateMemberForm
 
 
-def create_form(request_data=None):
+def create_member_form(request_data=None):
     if request_data:
-        return MemberForm(request_data)
+        return CreateMemberForm(request_data)
 
-    return MemberForm()
+    return CreateMemberForm()
