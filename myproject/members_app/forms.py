@@ -9,8 +9,6 @@ class CreateMemberForm(UserCreationForm):
     field_order = ['username', 'email', 'password1', 'password2']
     email = forms.EmailField(label="Your Email")
 
-
-
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
@@ -27,6 +25,14 @@ class EditMemberForm(ModelForm):
 
     courses = forms.ModelChoiceField(
                         queryset=Course.objects.all().order_by('name'),
-                        to_field_name='name',
+                        to_field_name='id',
                         label="Available courses"
                 )
+
+    # def save(self, commit=True):
+    #     user = super(UserCreationForm, self).save(commit=False)
+    #     user.email = self.cleaned_data["email"]
+    #     if commit:
+    #         user.save()
+    #
+    #     return user

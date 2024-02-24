@@ -7,7 +7,7 @@
 
 {% for course in courses %}
     <div class="p-2">
-        <a href="{% url 'show_course' course.id %}">{{ course.name }}</a>
+        <a href="{% url 'courses' course.id %}">{{ course.name }}</a>
     </div>
 {% endfor %}
 <a href="{% url 'save_course' %}">Create new course</a>

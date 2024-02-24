@@ -6,9 +6,7 @@ from .models import Member
 from .forms import EditMemberForm
 from courses_app.models import Course
 from myproject.utils import ErrorConstants
-
-
-# import pdb; pdb.set_trace()
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -43,12 +41,22 @@ class EditUserPage(View):
 
         return render(request, self.user_template_name, data)
 
-    def post(self, request):
-        form = create_member_form(request_data=request.POST)
+    def post(self, request, id):
+        user = User.objects.filter(id=id).first()
 
-        # if form.is_valid():
-            # name = form.cleaned_data.get('name')
-            # email = form.cleaned_data.get('email')
-            # Member.objects.get_or_create(name=name, email=email)
+        if not user:
+            return render(request, ErrorConstants.error_404_template, {})
+
+        try:
+            user.full_clean()
+            form = EditMemberForm(request.POST, instance=user)
+            course_id = request.POST.get('courses')
+            course = Course.objects.filter(id=course_id).first()
+            course.enrolled_users.add(user)
+            form.save()
+
+        except ValidationError as e:
+            print(e)
 
         return redirect('users')
+    
