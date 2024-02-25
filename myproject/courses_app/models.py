@@ -1,5 +1,5 @@
 from django.db import models
-from members_app.models import UserEnrollment
+from django.contrib.auth.models import User
 
 
 class Course(models.Model):
@@ -10,5 +10,5 @@ class Course(models.Model):
                 name="unique_name"
             )]
 
-    enrolled_users = models.ManyToManyField(UserEnrollment)
+    enrolled_users = models.ManyToManyField(User)
     name = models.CharField(max_length=255)
